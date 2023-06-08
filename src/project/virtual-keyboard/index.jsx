@@ -1,7 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./css/style.css";
+import { Keyboard } from "./js/keyboard";
 
 const VirtualKeyBoard = () => {
+    useEffect(() => {
+        new Keyboard();
+    }, []);
+
     return (
         <div className="container" id="container">
             <div className="menu">
@@ -11,8 +16,8 @@ const VirtualKeyBoard = () => {
                 </label>
                 <div className="select-box">
                     <label htmlFor="font">Font:</label>
-                    <select defaultValue="" id="font">
-                        <option value="" disabled selected>
+                    <select defaultValue={"Choose Font"} id="font">
+                        <option value="Choose Font" disabled>
                             Choose Font
                         </option>
                         <option value="Comic Sans MS, Comic Sans, cursive">
