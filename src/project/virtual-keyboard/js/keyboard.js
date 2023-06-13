@@ -1,6 +1,7 @@
 export class Keyboard {
     #swichEl;
     #fontSelectEl;
+    #containerEl;
 
     constructor() {
         this.#assignElement();
@@ -8,20 +9,24 @@ export class Keyboard {
     }
 
     #assignElement() {
-        this.#swichEl = document.getElementById("switch");
-        this.#fontSelectEl = document.getElementById("font");
+        this.#containerEl = document.getElementById("container");
+        this.#swichEl = this.#containerEl.querySelector("#switch");
+        this.#fontSelectEl = this.#containerEl.querySelector("#font");
     }
 
     #addEvent() {
-        this.#swichEl.addEventListener("change", (event) => {
-            document.documentElement.setAttribute(
-                "theme",
-                event.target.checked ? "dark-mode" : ""
-            );
-            console.log(event.target.checked);
-        });
-        this.#fontSelectEl.addEventListener("change", (event) => {
-            document.body.style.fontFamily = event.target.value;
-        });
+        this.#swichEl.addEventListener("change", this.#onChangeTheme);
+        this.#fontSelectEl.addEventListener("change", this.#onChangeFont);
+    }
+
+    #onChangeTheme(event) {
+        document.documentElement.setAttribute(
+            "theme",
+            event.target.checked ? "dark-mode" : ""
+        );
+    }
+
+    #onChangeFont(event) {
+        document.body.style.fontFamily = event.target.value;
     }
 }
