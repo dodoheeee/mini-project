@@ -2,6 +2,7 @@ export class Keyboard {
     #swichEl;
     #fontSelectEl;
     #containerEl;
+    #keyboardEl;
 
     constructor() {
         this.#assignElement();
@@ -12,11 +13,22 @@ export class Keyboard {
         this.#containerEl = document.getElementById("container");
         this.#swichEl = this.#containerEl.querySelector("#switch");
         this.#fontSelectEl = this.#containerEl.querySelector("#font");
+        this.#keyboardEl = this.#containerEl.querySelector("#keyboard");
     }
 
     #addEvent() {
         this.#swichEl.addEventListener("change", this.#onChangeTheme);
         this.#fontSelectEl.addEventListener("change", this.#onChangeFont);
+        document.addEventListener("keydown", (event) => {
+            this.#keyboardEl
+                .querySelector(`[data-code=${event.code}]`)
+                ?.classList.add("active");
+        });
+        document.addEventListener("keyup", (event) => {
+            this.#keyboardEl
+                .querySelector(`[data-code=${event.code}]`)
+                ?.classList.remove("active");
+        });
     }
 
     #onChangeTheme(event) {
