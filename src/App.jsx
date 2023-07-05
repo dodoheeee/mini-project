@@ -8,9 +8,10 @@ const App = () => {
             <Router>
                 <Routes>
                     <Route
-                        path="/"
+                        path="/keyboard"
                         element={<Project.VirtualKeyBoard.default />}
                     />
+                    <Route path="/" element={<Project.ImageSlider.default />} />
                 </Routes>
             </Router>
         </>
