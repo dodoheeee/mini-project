@@ -43,7 +43,12 @@ module.exports = {
                 options: {
                     presets: ['@babel/preset-env', '@babel/preset-react'],
                 },
+            },
+            {
+                test : /\.jpeg$/,
+                type : "./src/image/inline",
             }
+
         ],
     },
     optimization: {
