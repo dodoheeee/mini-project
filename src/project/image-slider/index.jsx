@@ -40,15 +40,7 @@ const ImageSlider = () => {
             </div>
 
             <div className="indicator-wrap" id="indicator-wrap">
-                <ul>
-                    <li className="active"></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                </ul>
+                <ul></ul>
             </div>
 
             <div className="control-wrap play" id="control-wrap">

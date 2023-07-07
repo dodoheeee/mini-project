@@ -7,6 +7,7 @@ export class Slider {
     sliderListEl;
     nextBtnEl;
     previousBtnEl;
+    indicatorWrapEl;
 
     constructor() {
         this.assignElement();
@@ -14,12 +15,16 @@ export class Slider {
         this.initSliderWidth();
         this.initSliderListWidth();
         this.addEvent();
+        this.createIndicator();
+        this.setIndicator();
     }
     assignElement() {
         this.sliderWrapEl = document.getElementById("slider-wrap");
         this.sliderListEl = this.sliderWrapEl.querySelector("#slider");
         this.nextBtnEl = this.sliderWrapEl.querySelector("#next");
         this.previousBtnEl = this.sliderWrapEl.querySelector("#previous");
+        this.indicatorWrapEl =
+            this.sliderWrapEl.querySelector("#indicator-wrap");
     }
     initSliderNumber() {
         this.#slideNumber = this.sliderListEl.querySelectorAll("li").length;
@@ -39,6 +44,21 @@ export class Slider {
             "click",
             this.moveToLeft.bind(this)
         );
+        this.indicatorWrapEl.addEventListener(
+            "click",
+            this.onClickIndicator.bind(this)
+        );
+    }
+    onClickIndicator(event) {
+        const indexPositon = parseInt(event.target.dataset.index, 10);
+        console.log("indexPositon", indexPositon);
+        if (Number.isInteger(indexPositon)) {
+            this.#currentPosition = indexPositon;
+            this.sliderListEl.style.left = `-${
+                this.#slideWidth * this.#currentPosition
+            }px`;
+            this.setIndicator();
+        }
     }
     moveToRight() {
         this.#currentPosition++;
@@ -48,6 +68,7 @@ export class Slider {
         this.sliderListEl.style.left = `-${
             this.#slideWidth * this.#currentPosition
         }px`;
+        this.setIndicator();
     }
     moveToLeft() {
         this.#currentPosition--;
@@ -57,5 +78,23 @@ export class Slider {
         this.sliderListEl.style.left = `-${
             this.#slideWidth * this.#currentPosition
         }px`;
+        this.setIndicator();
+    }
+    createIndicator() {
+        const docFragment = document.createDocumentFragment();
+        for (let i = 0; i < this.#slideNumber; i++) {
+            const li = document.createElement("li");
+            li.dataset.index = i;
+            docFragment.appendChild(li);
+        }
+        this.indicatorWrapEl.querySelector("ul").appendChild(docFragment);
+    }
+    setIndicator() {
+        this.indicatorWrapEl
+            .querySelector("li.active")
+            ?.classList.remove("active");
+        this.indicatorWrapEl
+            .querySelector(`ul li:nth-child(${this.#currentPosition + 1})`)
+            .classList.add("active");
     }
 }
